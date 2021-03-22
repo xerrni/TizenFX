@@ -38,6 +38,16 @@ internal static partial class Interop
                 Falling,
                 Both
             }
+            public struct PeripherialGpio
+            {
+                UInt32 handle;
+                int fdDirection;
+                int fdEdge;
+                int fdValue;
+                Direction direction;
+                public EdgeType edge;
+                // skip interrupted_cb_info_s as it is last element and we do not need it.
+            }
 
             [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
             internal delegate void InterruptedEventCallback(IntPtr handle, ErrorCode error, IntPtr data);

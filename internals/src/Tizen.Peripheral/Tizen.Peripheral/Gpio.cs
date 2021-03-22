@@ -168,7 +168,11 @@ namespace Tizen.Peripheral.Gpio
 
         private void OnInterrupted(IntPtr handle, ErrorCode error, IntPtr data)
         {
-            ValueChanged?.Invoke(this, new PinUpdatedEventArgs(PinNumber, Read()));
+            NativeGpio.PeripherialGpio pio = (NativeGpio.PeripherialGpio)
+                                            System.Runtime.InteropServices.Marshal.PtrToStructure(data,
+                                                typeof(NativeGpio.PeripherialGpio));
+            ValueChanged?.Invoke(this, new PinUpdatedEventArgs(PinNumber,
+						pio.edge == NativeGpio.EdgeType.Rising ? GpioPinValue.High : GpioPinValue.Low));
         }
 
         /// <summary>
